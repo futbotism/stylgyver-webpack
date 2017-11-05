@@ -5,6 +5,7 @@
       "es2015",
       "dom"
     ],
+    "types": ["node"],
     "outDir": "out",
     "declaration": true,
     "declarationDir": "out"
