@@ -1,4 +1,4 @@
-export class NgOutput {
+export class TypedVariable {
   name: string;
   type: string;
 }
