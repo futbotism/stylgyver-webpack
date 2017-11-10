@@ -22,12 +22,11 @@ class StyleGuidelerPlugin {
       this.styleguide[source.name] = folderScan.performScan();
     });
 
-    console.log('styleguide generated');
-    console.log(this.styleguide);
-    // Promise.all(requests).then(() => {
-    // fs.writeFile(this.options.outputPath, JSON.stringify(this.styleguide, null, 
-    // 2), 'utf-8', () => console.log('The styleguide has been generated 🎨'));
-    // });
+    require('fs').writeFile(
+      this.options.outputPath,
+      JSON.stringify(this.styleguide, null, 2),
+      'utf-8',
+      () => console.log('The styleguide has been generated 🎨'));
   }
 }
 
