@@ -1,7 +1,7 @@
-import { Options, Source } from './lib/models';
+import { Options, SourceOption } from './lib/models';
 import { FolderScan } from './lib/classes';
 
-class StyleGuidelerPlugin {
+class StyleGyverPlugin {
 
   options: Options;
   styleguide = {};
@@ -17,17 +17,18 @@ class StyleGuidelerPlugin {
   }
 
   buildStyleguide() {
-    this.options.sources.map((source: Source) => {
-      const folderScan = new FolderScan(source);
-      this.styleguide[source.name] = folderScan.performScan();
+    this.options.sourceOptions.map((sourceOption: SourceOption) => {
+      const folderScan = new FolderScan(sourceOption);
+      this.styleguide[sourceOption.name] = folderScan.performScan();
     });
 
     require('fs').writeFile(
       this.options.outputPath,
       JSON.stringify(this.styleguide, null, 2),
       'utf-8',
-      () => console.log('The styleguide has been generated 🎨'));
+      // tslint:disable-next-line:no-console
+      () => console.info('The styleguide has been generated 🎨'));
   }
 }
 
-export = StyleGuidelerPlugin;
+export = StyleGyverPlugin;

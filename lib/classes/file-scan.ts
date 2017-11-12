@@ -8,7 +8,7 @@ export class FileScan {
 
   public comments: any;
   public examples: any;
-  public lead: string;
+  public description: string;
   public title: string;
   public id: string;
   public lines: string[];
@@ -18,14 +18,18 @@ export class FileScan {
   public getInputFromLines = false;
   public getOutputFromLines = false;
 
-  constructor(path: string, folderOrFileName: string) {
+  constructor(path: string) {
     this.path = path;
-    this.id = camelCase(folderOrFileName);
-    this.title = folderOrFileName.split('-').join(' ');
-    this.lines = require('fs').readFileSync(path, 'utf-8').split('\n').filter(Boolean);
-    this.comments = (comments(require('fs').readFileSync(path, 'utf-8')));
-
+    this.getDefaults();
     this.parseComments();
+  }
+
+  getDefaults() {
+    const regex = /[\w-]+\./;
+    this.title = regex.exec(this.path)[0].replace('.', '');
+    this.id = camelCase(this.title);
+    this.lines = require('fs').readFileSync(this.path, 'utf-8').split('\n').filter(Boolean);
+    this.comments = (comments(require('fs').readFileSync(this.path, 'utf-8')));
   }
 
   getMenuItem(): MenuItem {
@@ -34,9 +38,13 @@ export class FileScan {
 
   parseComments() {
     this.comments.forEach((comment) => {
-      this.lead = comment.lead;
       this.examples = comment.examples;
+      this.description = this.useLeadOrDescription(comment);
     });
+  }
+
+  useLeadOrDescription(comment) {
+    return comment.lead === '' ? comment.description : comment.lead;
   }
 
   buildFileMeta() { }

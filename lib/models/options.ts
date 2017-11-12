@@ -1,14 +1,15 @@
 export interface Options {
   outputPath: string;
-  sources: Source[];
+  sourceOptions: SourceOption[];
 }
 
-export interface Source {
+export interface SourceOption {
   name: string;
   parseType: parseType;
   path: string;
   folderToIgnore: string[];
   tagsToSelect: string[];
+  addMetaToArray: boolean;
 }
 
 export type parseType = 'component' | 'directive' | 'service' | 'pipe' | 'model';

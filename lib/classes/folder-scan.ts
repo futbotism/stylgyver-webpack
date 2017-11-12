@@ -1,85 +1,84 @@
 import { FileScan, MenuItem, FolderMeta } from '../classes';
-import { Source, parseType } from '../models';
+import { SourceOption, parseType } from '../models';
 import * as fs from 'fs';
+import * as glob from 'glob';
 import {
   ComponentMetaGenerator,
-  // directiveMetaGenerator,
-  // serviceMetaGenerator,
-  // pipeMetaGenerator,
-  // modelMetaGenerator,
+  DirectiveMetaGenerator,
+  ServiceMetaGenerator,
+  PipeMetaGenerator,
+  ModelMetaGenerator,
 } from '../meta-generators';
 
 export class FolderScan {
-  source: Source;
+  sourceOption: SourceOption;
   activeFileParse: FileScan; // the file that is being currently parsed
   menu: MenuItem[] = [];
-  meta: {} = {};
+  meta: any;
 
-  constructor(source: Source) {
-    this.source = source;
+  constructor(sourceOption: SourceOption) {
+    this.sourceOption = sourceOption;
+
+    if (this.sourceOption.addMetaToArray) {
+      this.meta = [];
+    } else {
+      this.meta = {};
+    }
   }
 
   performScan() {
-    const foldersAndFiles = fs.readdirSync(this.source.path);
+    const files = glob.sync(`${this.sourceOption.path}/**/*.${this.sourceOption.parseType}.ts`, undefined);
 
-    foldersAndFiles.forEach((folderOrFileName, index) => {
-
-      if (!this.shouldIgnore(folderOrFileName)) {
-        const isFolder = false;
-        const fullPath = this.buildFilePath(folderOrFileName, isFolder);
-        this.activeFileParse = this.instantiateFileByType(fullPath, folderOrFileName);
+    files.forEach((file, index) => {
+      if (!this.shouldIgnore(file)) {
+        this.activeFileParse = this.instantiateFileByType(file);
         this.menu.push(this.activeFileParse.getMenuItem());
-        this.meta[this.activeFileParse.id] = this.activeFileParse.buildFileMeta();
-      }
 
+        if (this.sourceOption.addMetaToArray) {
+          this.meta.push(this.activeFileParse.buildFileMeta());
+        } else {
+          this.meta[this.activeFileParse.id] = this.activeFileParse.buildFileMeta();
+        }
+      }
     });
 
-    const meta = new FolderMeta(this.menu, this.meta);
-    return meta;
+    return new FolderMeta(this.menu, this.meta);
   }
 
-  shouldIgnore(folderOrFile: string) {
-    const isModule = folderOrFile.includes('module.ts');
-    const isIndex = folderOrFile.includes('index.ts');
-    const isIgnore = this.source.folderToIgnore.find(folderOrFileToIgnore => folderOrFileToIgnore === folderOrFile);
+  shouldIgnore(file: string) {
+    const isModule = file.includes('module.ts');
+    const isIndex = file.includes('index.ts');
+
+    let isIgnore;
+    if (this.sourceOption.folderToIgnore) {
+      isIgnore = this.sourceOption.folderToIgnore.find(fileToIgnore => fileToIgnore === file);
+    }
 
     return isModule || isIndex || isIgnore;
   }
 
-  instantiateFileByType(folderOrFile: string, folderOrFileName: string) {
+  instantiateFileByType(file: string) {
 
-    switch (this.source.parseType) {
+    switch (this.sourceOption.parseType) {
       case parseType.component:
-        return new ComponentMetaGenerator(folderOrFile, folderOrFileName);
+        return new ComponentMetaGenerator(file);
 
       case parseType.directive:
-        // directiveMetaGenerator(folderOrFile);
-        break;
+        return new DirectiveMetaGenerator(file);
 
       case parseType.service:
-        // serviceMetaGenerator(folderOrFile);
-        break;
+        return new ServiceMetaGenerator(file);
 
       case parseType.pipe:
-        // pipeMetaGenerator(folderOrFile);
-        break;
+        return new PipeMetaGenerator(file);
 
       case parseType.model:
-        // modelMetaGenerator(folderOrFile);
-        break;
+        return new ModelMetaGenerator(file);
 
       default:
         process.exit(1);
-        throw `parse type ${this.source.parseType} was not recognized`;
+        throw `parse type ${this.sourceOption.parseType} was not recognized`;
     }
 
-  }
-
-  buildFilePath(fileName: string, isFolder: boolean) {
-    if (isFolder) {
-      return `${this.source.path}/${fileName}.${this.source.parseType}.ts`;
-    } else {
-      return `${this.source.path}/${fileName}/${fileName}.${this.source.parseType}.ts`;
-    }
   }
 }

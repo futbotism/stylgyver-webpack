@@ -10,8 +10,8 @@ export class ComponentMetaGenerator extends FileScan {
   contentChildList: TypedVariable[] = [];
   contentChildrenList: TypedVariable[] = [];
 
-  constructor(path: string, folderOrFileName: string) {
-    super(path, folderOrFileName);
+  constructor(path: string) {
+    super(path);
     this.parseLines();
   }
 
@@ -49,7 +49,7 @@ export class ComponentMetaGenerator extends FileScan {
     return {
       id: this.id,
       title: this.title,
-      lead: this.lead,
+      description: this.description,
       examples: this.examples,
       inputList: this.inputList,
       outputList: this.outputList,

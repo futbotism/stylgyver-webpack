@@ -1,7 +1,7 @@
 {
-  "name": "typescript-module-template",
+  "name": "stylgyver-webpack",
   "version": "1.0.0",
-  "description": "A typescript boilerplate to publish modules to npm",
+  "description": "A plugin for parsing angular projects and extracting meta info for displaying into a styleguide.",
   "main": "out/index.js",
   "scripts": {
     "test": "jest --ci --silent",
@@ -13,6 +13,7 @@
   "author": "Juan Camilo Guarín P",
   "license": "MIT",
   "devDependencies": {
+    "@types/glob": "^5.0.33",
     "@types/jest": "^21.1.4",
     "@types/lodash": "^4.14.81",
     "@types/node": "^8.0.47",
@@ -23,6 +24,7 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
+    "glob": "^7.1.2",
     "lodash": "^4.17.4",
     "parse-comments": "^0.4.3"
   },
@@ -46,10 +48,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/owsas/typescript-module-template.git"
+    "url": "git+https://github.com/futbotism/stylgyver-webpack.git"
   },
   "bugs": {
-    "url": "https://github.com/owsas/typescript-module-template/issues"
+    "url": "https://github.com/futbotism/stylgyver-webpack/issues"
   },
-  "homepage": "https://github.com/owsas/typescript-module-template#readme"
+  "homepage": "https://github.com/futbotism/stylgyver-webpack#readme"
 }
