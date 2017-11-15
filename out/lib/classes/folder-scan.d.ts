@@ -1,13 +1,14 @@
-import { FileScan, MenuItem, FolderMeta } from '../classes';
+import { BaseFile, MenuItem, FolderMeta } from '../classes';
 import { SourceOption } from '../models';
-import { ModelMetaGenerator } from '../meta-generators';
+import { ServiceFile } from './file';
 export declare class FolderScan {
     sourceOption: SourceOption;
-    activeFileParse: FileScan;
+    activeFile: BaseFile;
     menu: MenuItem[];
     meta: any;
     constructor(sourceOption: SourceOption);
     performScan(): FolderMeta;
-    shouldIgnore(file: string): any;
-    instantiateFileByType(file: string): ModelMetaGenerator;
+    appendMeta(): void;
+    shouldIgnore(filePath: string): any;
+    instantiateFileByType(filePath: any, sourceFile: any): ServiceFile;
 }

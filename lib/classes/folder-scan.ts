@@ -1,79 +1,91 @@
-import { FileScan, MenuItem, FolderMeta } from '../classes';
+import { BaseFile, MenuItem, FolderMeta } from '../classes';
 import { SourceOption, parseType } from '../models';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import {
-  ComponentMetaGenerator,
-  DirectiveMetaGenerator,
-  ServiceMetaGenerator,
-  PipeMetaGenerator,
-  ModelMetaGenerator,
-} from '../meta-generators';
+  ComponentFile,
+  DirectiveFile,
+  ServiceFile,
+  PipeFile,
+  ModelFile,
+} from './file';
+import tsSimpleAst from 'ts-simple-ast';
 
 export class FolderScan {
   sourceOption: SourceOption;
-  activeFileParse: FileScan; // the file that is being currently parsed
+  activeFile: BaseFile; // the file that is being currently parsed
   menu: MenuItem[] = [];
   meta: any;
 
   constructor(sourceOption: SourceOption) {
     this.sourceOption = sourceOption;
-
-    if (this.sourceOption.addMetaToArray) {
-      this.meta = [];
-    } else {
-      this.meta = {};
-    }
+    this.meta = this.sourceOption.addMetaToArray ? [] : {};
   }
 
   performScan() {
-    const files = glob.sync(`${this.sourceOption.path}/**/*.${this.sourceOption.parseType}.ts`, undefined);
 
-    files.forEach((file, index) => {
-      if (!this.shouldIgnore(file)) {
-        this.activeFileParse = this.instantiateFileByType(file);
-        this.menu.push(this.activeFileParse.getMenuItem());
+    const ast = new tsSimpleAst();
+    ast.addSourceFiles('**/*.ts');
 
-        if (this.sourceOption.addMetaToArray) {
-          this.meta.push(this.activeFileParse.buildFileMeta());
-        } else {
-          this.meta[this.activeFileParse.id] = this.activeFileParse.buildFileMeta();
-        }
+    const globPath = `${this.sourceOption.path}/**/*.${this.sourceOption.parseType}.ts`;
+    const files = glob.sync(globPath, undefined);
+    
+    files.forEach((filePath, index) => {
+      if (!this.shouldIgnore(filePath)) {
+        
+        const sourceFile = ast.getSourceFile(filePath);
+        // const interfaces = sourceFile.getInterfaces();        
+        // console.log(filePath);
+        // console.log(sourceFile);
+
+        this.activeFile = this.instantiateFileByType(filePath, sourceFile);
+        this.menu.push(this.activeFile.getMenuItem());
+        this.appendMeta();
+
+
       }
     });
 
     return new FolderMeta(this.menu, this.meta);
   }
 
-  shouldIgnore(file: string) {
-    const isModule = file.includes('module.ts');
-    const isIndex = file.includes('index.ts');
+  appendMeta() {
+    if (this.sourceOption.addMetaToArray) {
+      this.meta.push(this.activeFile.buildFileMeta());
+    } else {
+      this.meta[this.activeFile.id] = this.activeFile.buildFileMeta();
+    }
+  }
+
+  shouldIgnore(filePath: string) {
+    const isModule = filePath.includes('module.ts');
+    const isIndex = filePath.includes('index.ts');
 
     let isIgnore;
     if (this.sourceOption.folderToIgnore) {
-      isIgnore = this.sourceOption.folderToIgnore.find(fileToIgnore => fileToIgnore === file);
+      isIgnore = this.sourceOption.folderToIgnore.find(filePathToIgnore => filePathToIgnore === filePath);
     }
 
     return isModule || isIndex || isIgnore;
   }
 
-  instantiateFileByType(file: string) {
+  instantiateFileByType(filePath, sourceFile) {
 
     switch (this.sourceOption.parseType) {
       case parseType.component:
-        return new ComponentMetaGenerator(file);
+        return new ComponentFile(filePath, sourceFile);
 
       case parseType.directive:
-        return new DirectiveMetaGenerator(file);
+        return new DirectiveFile(filePath, sourceFile);
 
       case parseType.service:
-        return new ServiceMetaGenerator(file);
+        return new ServiceFile(filePath, sourceFile);
 
       case parseType.pipe:
-        return new PipeMetaGenerator(file);
+        return new PipeFile(filePath, sourceFile);
 
       case parseType.model:
-        return new ModelMetaGenerator(file);
+        return new ModelFile(filePath, sourceFile);
 
       default:
         process.exit(1);

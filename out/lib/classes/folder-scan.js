@@ -3,56 +3,62 @@ exports.__esModule = true;
 var classes_1 = require("../classes");
 var models_1 = require("../models");
 var glob = require("glob");
-var meta_generators_1 = require("../meta-generators");
+var file_1 = require("./file");
+var ts_simple_ast_1 = require("ts-simple-ast");
 var FolderScan = /** @class */ (function () {
     function FolderScan(sourceOption) {
         this.menu = [];
         this.sourceOption = sourceOption;
-        if (this.sourceOption.addMetaToArray) {
-            this.meta = [];
-        }
-        else {
-            this.meta = {};
-        }
+        this.meta = this.sourceOption.addMetaToArray ? [] : {};
     }
     FolderScan.prototype.performScan = function () {
         var _this = this;
-        var files = glob.sync(this.sourceOption.path + "/**/*." + this.sourceOption.parseType + ".ts", undefined);
-        files.forEach(function (file, index) {
-            if (!_this.shouldIgnore(file)) {
-                _this.activeFileParse = _this.instantiateFileByType(file);
-                _this.menu.push(_this.activeFileParse.getMenuItem());
-                if (_this.sourceOption.addMetaToArray) {
-                    _this.meta.push(_this.activeFileParse.buildFileMeta());
-                }
-                else {
-                    _this.meta[_this.activeFileParse.id] = _this.activeFileParse.buildFileMeta();
-                }
+        var ast = new ts_simple_ast_1["default"]();
+        ast.addSourceFiles('**/*.ts');
+        var globPath = this.sourceOption.path + "/**/*." + this.sourceOption.parseType + ".ts";
+        var files = glob.sync(globPath, undefined);
+        files.forEach(function (filePath, index) {
+            if (!_this.shouldIgnore(filePath)) {
+                var sourceFile = ast.getSourceFile(filePath);
+                // const interfaces = sourceFile.getInterfaces();        
+                // console.log(filePath);
+                // console.log(sourceFile);
+                _this.activeFile = _this.instantiateFileByType(filePath, sourceFile);
+                _this.menu.push(_this.activeFile.getMenuItem());
+                _this.appendMeta();
             }
         });
         return new classes_1.FolderMeta(this.menu, this.meta);
     };
-    FolderScan.prototype.shouldIgnore = function (file) {
-        var isModule = file.includes('module.ts');
-        var isIndex = file.includes('index.ts');
+    FolderScan.prototype.appendMeta = function () {
+        if (this.sourceOption.addMetaToArray) {
+            this.meta.push(this.activeFile.buildFileMeta());
+        }
+        else {
+            this.meta[this.activeFile.id] = this.activeFile.buildFileMeta();
+        }
+    };
+    FolderScan.prototype.shouldIgnore = function (filePath) {
+        var isModule = filePath.includes('module.ts');
+        var isIndex = filePath.includes('index.ts');
         var isIgnore;
         if (this.sourceOption.folderToIgnore) {
-            isIgnore = this.sourceOption.folderToIgnore.find(function (fileToIgnore) { return fileToIgnore === file; });
+            isIgnore = this.sourceOption.folderToIgnore.find(function (filePathToIgnore) { return filePathToIgnore === filePath; });
         }
         return isModule || isIndex || isIgnore;
     };
-    FolderScan.prototype.instantiateFileByType = function (file) {
+    FolderScan.prototype.instantiateFileByType = function (filePath, sourceFile) {
         switch (this.sourceOption.parseType) {
             case models_1.parseType.component:
-                return new meta_generators_1.ComponentMetaGenerator(file);
+                return new file_1.ComponentFile(filePath, sourceFile);
             case models_1.parseType.directive:
-                return new meta_generators_1.DirectiveMetaGenerator(file);
+                return new file_1.DirectiveFile(filePath, sourceFile);
             case models_1.parseType.service:
-                return new meta_generators_1.ServiceMetaGenerator(file);
+                return new file_1.ServiceFile(filePath, sourceFile);
             case models_1.parseType.pipe:
-                return new meta_generators_1.PipeMetaGenerator(file);
+                return new file_1.PipeFile(filePath, sourceFile);
             case models_1.parseType.model:
-                return new meta_generators_1.ModelMetaGenerator(file);
+                return new file_1.ModelFile(filePath, sourceFile);
             default:
                 process.exit(1);
                 throw "parse type " + this.sourceOption.parseType + " was not recognized";
