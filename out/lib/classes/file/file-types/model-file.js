@@ -21,14 +21,10 @@ var ModelFile = /** @class */ (function (_super) {
         return _this;
     }
     ModelFile.prototype.parseLines = function () {
-        this.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e; });
+        this.common.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e; });
     };
     ModelFile.prototype.buildFileMeta = function () {
-        return new model_meta_1.ModelMeta({
-            id: this.id,
-            title: this.title,
-            properties: this.properties
-        });
+        return new model_meta_1.ModelMeta(this.common);
     };
     return ModelFile;
 }(base_file_1.BaseFile));

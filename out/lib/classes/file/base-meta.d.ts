@@ -1,8 +1,9 @@
 import { Property } from '../../models';
-export declare class BaseMeta {
+import { CommonMetaProperties } from './common-meta';
+export declare class BaseMeta implements CommonMetaProperties {
     id: string;
     title: string;
     description: string;
     properties: Property[];
-    constructor(baseOptions: any);
+    constructor(common: CommonMetaProperties);
 }

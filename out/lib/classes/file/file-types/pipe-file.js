@@ -10,19 +10,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-var pipe_meta_1 = require("../meta/pipe-meta");
 var base_file_1 = require("../base-file");
+var pipe_meta_1 = require("../meta/pipe-meta");
 var PipeFile = /** @class */ (function (_super) {
     __extends(PipeFile, _super);
     function PipeFile(path, sourceFile) {
         return _super.call(this, path, sourceFile) || this;
     }
     PipeFile.prototype.buildFileMeta = function () {
-        return new pipe_meta_1.PipeMeta({
-            id: this.id,
-            title: this.title,
-            properties: this.properties
-        });
+        return new pipe_meta_1.PipeMeta(this.common);
     };
     return PipeFile;
 }(base_file_1.BaseFile));

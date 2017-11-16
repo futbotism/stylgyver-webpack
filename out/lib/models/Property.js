@@ -5,7 +5,6 @@ var Property = /** @class */ (function () {
         this.name = name;
         this.type = type;
         this.decorator = decorator;
-        console.log(this);
     }
     return Property;
 }());

@@ -1,5 +1,5 @@
-import { PipeMeta } from '../meta/pipe-meta';
 import { BaseFile } from '../base-file';
+import { PipeMeta } from '../meta/pipe-meta';
 
 export class PipeFile extends BaseFile {
 
@@ -8,10 +8,6 @@ export class PipeFile extends BaseFile {
   }
 
   buildFileMeta() {
-    return new PipeMeta({
-      id: this.id,
-      title: this.title,
-      properties: this.properties,
-    });
+    return new PipeMeta(this.common);
   }
 }

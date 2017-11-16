@@ -11,14 +11,10 @@ export class ModelFile extends BaseFile {
   }
 
   parseLines() {
-    this.properties = this.lines.map(line => getPropertyFromLine(line)).filter(e => e);
+    this.common.properties = this.lines.map(line => getPropertyFromLine(line)).filter(e => e);
   }
 
   buildFileMeta() {
-    return new ModelMeta({
-      id: this.id,
-      title: this.title,
-      properties: this.properties,
-    });
+    return new ModelMeta(this.common);
   }
 }

@@ -1,5 +1,5 @@
-import { DirectiveMeta } from '../meta/directive-meta';
 import { BaseFile } from '../base-file';
+import { DirectiveMeta } from '../meta/directive-meta';
 
 export class DirectiveFile extends BaseFile {
 
@@ -13,11 +13,6 @@ export class DirectiveFile extends BaseFile {
   }
 
   buildFileMeta() {
-
-    return new DirectiveMeta({
-      id: this.id,
-      title: this.title,
-      properties: this.properties,
-    });
+    return new DirectiveMeta(this.common);
   }
 }

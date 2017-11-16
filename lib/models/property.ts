@@ -7,6 +7,5 @@ export class Property {
     this.name = name;
     this.type = type;
     this.decorator = decorator;
-    console.log(this);
   }
 }

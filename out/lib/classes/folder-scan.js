@@ -31,7 +31,7 @@ var FolderScan = /** @class */ (function () {
             this.meta.push(this.activeFile.buildFileMeta());
         }
         else {
-            this.meta[this.activeFile.id] = this.activeFile.buildFileMeta();
+            this.meta[this.activeFile.common.id] = this.activeFile.buildFileMeta();
         }
     };
     FolderScan.prototype.shouldIgnore = function (filePath) {

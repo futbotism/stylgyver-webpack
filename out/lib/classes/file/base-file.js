@@ -12,16 +12,20 @@ var BaseFile = /** @class */ (function () {
         this.getDefaults();
     }
     BaseFile.prototype.getDefaults = function () {
-        var _this = this;
-        var regex = /[\w-]+\./;
-        this.title = regex.exec(this.filePath)[0].replace('.', '');
-        this.id = lodash_1.camelCase(this.title);
-        this.comments.map(function (comment) {
-            _this.description += comment.lead;
-        });
+        var regex = /[\w-]+\./; // TODO: move to constant folder
+        var description = this.comments[0].lead;
+        var title = regex.exec(this.filePath)[0].replace('.', '');
+        var properties = undefined;
+        var id = lodash_1.camelCase(title);
+        this.common = {
+            description: description,
+            title: title,
+            properties: properties,
+            id: id
+        };
     };
     BaseFile.prototype.getMenuItem = function () {
-        return new menu_item_1.MenuItem(this.title, this.id);
+        return new menu_item_1.MenuItem(this.common.title, this.common.id);
     };
     BaseFile.prototype.buildFileMeta = function () { };
     return BaseFile;

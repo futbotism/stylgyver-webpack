@@ -21,18 +21,13 @@ var ComponentFile = /** @class */ (function (_super) {
         return _this;
     }
     ComponentFile.prototype.parseLines = function () {
-        this.properties = this.lines
+        this.common.properties = this.lines
             .map(function (line) { return functions_1.getPropertyFromLine(line); })
             .filter(function (property) { return property && property.decorator; });
         this.examples = this.comments.map(function (comment) { return comment.examples.map(function (example) { return example.code; }); });
     };
     ComponentFile.prototype.buildFileMeta = function () {
-        return new component_meta_1.ComponentMeta({
-            id: this.id,
-            title: this.title,
-            properties: this.properties,
-            description: this.description
-        }, this.examples);
+        return new component_meta_1.ComponentMeta(this.common, this.examples);
     };
     return ComponentFile;
 }(base_file_1.BaseFile));

@@ -10,19 +10,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-var service_meta_1 = require("../meta/service-meta");
 var base_file_1 = require("../base-file");
+var service_meta_1 = require("../meta/service-meta");
 var ServiceFile = /** @class */ (function (_super) {
     __extends(ServiceFile, _super);
     function ServiceFile(path, sourceFile) {
         return _super.call(this, path, sourceFile) || this;
     }
     ServiceFile.prototype.buildFileMeta = function () {
-        return new service_meta_1.ServiceMeta({
-            id: this.id,
-            title: this.title,
-            properties: this.properties
-        });
+        return new service_meta_1.ServiceMeta(this.common);
     };
     return ServiceFile;
 }(base_file_1.BaseFile));

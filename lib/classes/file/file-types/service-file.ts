@@ -1,5 +1,5 @@
-import { ServiceMeta } from '../meta/service-meta';
 import { BaseFile } from '../base-file';
+import { ServiceMeta } from '../meta/service-meta';
 
 export class ServiceFile extends BaseFile {
 
@@ -8,10 +8,6 @@ export class ServiceFile extends BaseFile {
   }
 
   buildFileMeta() {
-    return new ServiceMeta({
-      id: this.id,
-      title: this.title,
-      properties: this.properties,
-    });
+    return new ServiceMeta(this.common);
   }
 }

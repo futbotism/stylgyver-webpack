@@ -42,7 +42,7 @@ export class FolderScan {
     if (this.sourceOption.addMetaToArray) {
       this.meta.push(this.activeFile.buildFileMeta());
     } else {
-      this.meta[this.activeFile.id] = this.activeFile.buildFileMeta();
+      this.meta[this.activeFile.common.id] = this.activeFile.buildFileMeta();
     }
   }
 

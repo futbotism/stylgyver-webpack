@@ -3,8 +3,8 @@ import { BaseMeta } from '../base-meta';
 export class ComponentMeta extends BaseMeta {
   examples: string[];
 
-  constructor(baseOptions, examples) {
-    super(baseOptions);
+  constructor(common, examples) {
+    super(common);
     this.examples = examples;
   }
 }

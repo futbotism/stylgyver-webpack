@@ -10,8 +10,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-var directive_meta_1 = require("../meta/directive-meta");
 var base_file_1 = require("../base-file");
+var directive_meta_1 = require("../meta/directive-meta");
 var DirectiveFile = /** @class */ (function (_super) {
     __extends(DirectiveFile, _super);
     function DirectiveFile(path, sourceFile) {
@@ -22,11 +22,7 @@ var DirectiveFile = /** @class */ (function (_super) {
     DirectiveFile.prototype.parseLines = function () {
     };
     DirectiveFile.prototype.buildFileMeta = function () {
-        return new directive_meta_1.DirectiveMeta({
-            id: this.id,
-            title: this.title,
-            properties: this.properties
-        });
+        return new directive_meta_1.DirectiveMeta(this.common);
     };
     return DirectiveFile;
 }(base_file_1.BaseFile));

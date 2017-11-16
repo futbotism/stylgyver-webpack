@@ -1,7 +1,7 @@
 import { getPropertyFromLine } from '../../../functions';
+import { Property } from '../../../models/index';
 import { BaseFile } from '../base-file';
 import { ComponentMeta } from '../meta/component-meta';
-import { Property } from '../../../models/index';
 
 export class ComponentFile extends BaseFile {
   examples: string[];
@@ -12,18 +12,13 @@ export class ComponentFile extends BaseFile {
   }
 
   parseLines() {
-    this.properties = this.lines
+    this.common.properties = this.lines
       .map(line => getPropertyFromLine(line))
       .filter((property: Property) => { return property && property.decorator; });
     this.examples = this.comments.map(comment => comment.examples.map(example => example.code));
   }
 
   buildFileMeta() {
-    return new ComponentMeta({
-      id: this.id,
-      title: this.title,
-      properties: this.properties,
-      description: this.description,
-    }, this.examples);
+    return new ComponentMeta(this.common, this.examples);
   }
 }

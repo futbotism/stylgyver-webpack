@@ -13,8 +13,8 @@ exports.__esModule = true;
 var base_meta_1 = require("../base-meta");
 var ModelMeta = /** @class */ (function (_super) {
     __extends(ModelMeta, _super);
-    function ModelMeta(baseOptions) {
-        return _super.call(this, baseOptions) || this;
+    function ModelMeta(common) {
+        return _super.call(this, common) || this;
     }
     return ModelMeta;
 }(base_meta_1.BaseMeta));

@@ -13,8 +13,8 @@ exports.__esModule = true;
 var base_meta_1 = require("../base-meta");
 var ServiceMeta = /** @class */ (function (_super) {
     __extends(ServiceMeta, _super);
-    function ServiceMeta(baseOptions) {
-        return _super.call(this, baseOptions) || this;
+    function ServiceMeta(common) {
+        return _super.call(this, common) || this;
     }
     return ServiceMeta;
 }(base_meta_1.BaseMeta));
