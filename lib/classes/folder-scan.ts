@@ -29,24 +29,21 @@ export class FolderScan {
 
     const globPath = `${this.sourceOption.path}/**/*.${this.sourceOption.parseType}.ts`;
     const files = glob.sync(globPath, undefined);
-    
+
     files.forEach((filePath, index) => {
       if (!this.shouldIgnore(filePath)) {
-        
+
         const sourceFile = ast.getSourceFile(filePath);
-        // const interfaces = sourceFile.getInterfaces();        
-        // console.log(filePath);
-        // console.log(sourceFile);
 
         this.activeFile = this.instantiateFileByType(filePath, sourceFile);
         this.menu.push(this.activeFile.getMenuItem());
         this.appendMeta();
-
-
+        console.log(this.meta);
       }
     });
 
     return new FolderMeta(this.menu, this.meta);
+
   }
 
   appendMeta() {

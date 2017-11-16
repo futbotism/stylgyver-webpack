@@ -5,7 +5,7 @@ var BaseMeta = /** @class */ (function () {
         this.id = baseOptions.id;
         this.title = baseOptions.title;
         this.properties = baseOptions.properties;
-        console.log(this);
+        this.description = baseOptions.description;
     }
     return BaseMeta;
 }());

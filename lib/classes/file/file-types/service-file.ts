@@ -11,7 +11,7 @@ export class ServiceFile extends BaseFile {
     return new ServiceMeta({
       id: this.id,
       title: this.title,
-      properties: null,
+      properties: this.properties,
     });
   }
 }

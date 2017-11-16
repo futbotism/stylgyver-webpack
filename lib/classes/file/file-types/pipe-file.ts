@@ -11,7 +11,7 @@ export class PipeFile extends BaseFile {
     return new PipeMeta({
       id: this.id,
       title: this.title,
-      properties: null,
+      properties: this.properties,
     });
   }
 }

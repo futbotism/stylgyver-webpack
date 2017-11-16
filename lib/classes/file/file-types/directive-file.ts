@@ -17,7 +17,7 @@ export class DirectiveFile extends BaseFile {
     return new DirectiveMeta({
       id: this.id,
       title: this.title,
-      properties: null,
+      properties: this.properties,
     });
   }
 }

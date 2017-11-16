@@ -1,8 +1,8 @@
-import { readFileSync } from 'fs';
+import { camelCase } from 'lodash';
+import * as comments from 'parse-comments';
+
+import { Property } from '../../models';
 import { MenuItem } from '../menu-item';
-import { camelCase, kebabCase } from 'lodash';
-const comments = require('parse-comments');
-import tsSimpleAst from 'ts-simple-ast';
 
 export class BaseFile {
   private filePath: string;
@@ -10,10 +10,18 @@ export class BaseFile {
 
   public title: string;
   public id: string;
+  public description: string;
+  public properties: Property[];
+  comments: any[];
+  lines: string[];
+
 
   constructor(filePath: string, sourceFile) {
+
     this.filePath = filePath;
     this.sourceFile = sourceFile;
+    this.lines = require('fs').readFileSync(this.filePath, 'utf-8').split('\n').filter(Boolean);
+    this.comments = (comments(require('fs').readFileSync(this.filePath, 'utf-8')));
     this.getDefaults();
   }
 
@@ -21,22 +29,14 @@ export class BaseFile {
     const regex = /[\w-]+\./;
     this.title = regex.exec(this.filePath)[0].replace('.', '');
     this.id = camelCase(this.title);
+    this.comments.map((comment) => {
+      this.description += comment.lead;
+    });
   }
 
   getMenuItem(): MenuItem {
     return new MenuItem(this.title, this.id);
   }
-
-  // parseComments() {
-  //   this.comments.forEach((comment) => {
-  //     this.examples = comment.examples;
-  //     this.description = this.useLeadOrDescription(comment);
-  //   });
-  // }
-
-  // useLeadOrDescription(comment) {
-  //   return comment.lead === '' ? comment.description : comment.lead;
-  // }
 
   buildFileMeta() { }
 }

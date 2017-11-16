@@ -21,7 +21,7 @@ var PipeFile = /** @class */ (function (_super) {
         return new pipe_meta_1.PipeMeta({
             id: this.id,
             title: this.title,
-            properties: null
+            properties: this.properties
         });
     };
     return PipeFile;

@@ -1,1 +1,1 @@
-export * from './extract-type-varible';
+export * from './get-property-from-line';

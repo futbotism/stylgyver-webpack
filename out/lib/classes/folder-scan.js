@@ -20,12 +20,10 @@ var FolderScan = /** @class */ (function () {
         files.forEach(function (filePath, index) {
             if (!_this.shouldIgnore(filePath)) {
                 var sourceFile = ast.getSourceFile(filePath);
-                // const interfaces = sourceFile.getInterfaces();        
-                // console.log(filePath);
-                // console.log(sourceFile);
                 _this.activeFile = _this.instantiateFileByType(filePath, sourceFile);
                 _this.menu.push(_this.activeFile.getMenuItem());
                 _this.appendMeta();
+                console.log(_this.meta);
             }
         });
         return new classes_1.FolderMeta(this.menu, this.meta);

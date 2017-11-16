@@ -1,7 +1,8 @@
-import { TypedVariable } from '../../models';
+import { Property } from '../../models';
 export declare class BaseMeta {
     id: string;
     title: string;
-    properties: TypedVariable[];
+    description: string;
+    properties: Property[];
     constructor(baseOptions: any);
 }

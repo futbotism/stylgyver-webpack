@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
-var TypedVariable = /** @class */ (function () {
-    function TypedVariable() {
+var Property = /** @class */ (function () {
+    function Property() {
     }
-    return TypedVariable;
+    return Property;
 }());
-exports.TypedVariable = TypedVariable;
+exports.Property = Property;

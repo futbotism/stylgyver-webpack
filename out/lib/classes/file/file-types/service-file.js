@@ -21,7 +21,7 @@ var ServiceFile = /** @class */ (function (_super) {
         return new service_meta_1.ServiceMeta({
             id: this.id,
             title: this.title,
-            properties: null
+            properties: this.properties
         });
     };
     return ServiceFile;

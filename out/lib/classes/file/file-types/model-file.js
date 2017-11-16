@@ -10,18 +10,24 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-var model_meta_1 = require("../meta/model-meta");
+var functions_1 = require("../../../functions");
 var base_file_1 = require("../base-file");
+var model_meta_1 = require("../meta/model-meta");
 var ModelFile = /** @class */ (function (_super) {
     __extends(ModelFile, _super);
     function ModelFile(path, sourceFile) {
-        return _super.call(this, path, sourceFile) || this;
+        var _this = _super.call(this, path, sourceFile) || this;
+        _this.parseLines();
+        return _this;
     }
+    ModelFile.prototype.parseLines = function () {
+        this.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e; });
+    };
     ModelFile.prototype.buildFileMeta = function () {
         return new model_meta_1.ModelMeta({
             id: this.id,
             title: this.title,
-            properties: undefined
+            properties: this.properties
         });
     };
     return ModelFile;

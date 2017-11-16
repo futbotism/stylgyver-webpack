@@ -25,7 +25,7 @@ var DirectiveFile = /** @class */ (function (_super) {
         return new directive_meta_1.DirectiveMeta({
             id: this.id,
             title: this.title,
-            properties: null
+            properties: this.properties
         });
     };
     return DirectiveFile;
