@@ -1,10 +1,9 @@
 "use strict";
 exports.__esModule = true;
+var glob = require("glob");
 var classes_1 = require("../classes");
 var models_1 = require("../models");
-var glob = require("glob");
 var file_1 = require("./file");
-var ts_simple_ast_1 = require("ts-simple-ast");
 var FolderScan = /** @class */ (function () {
     function FolderScan(sourceOption) {
         this.menu = [];
@@ -12,18 +11,17 @@ var FolderScan = /** @class */ (function () {
         this.meta = this.sourceOption.addMetaToArray ? [] : {};
     }
     FolderScan.prototype.performScan = function () {
+        // const ast = new tsSimpleAst();
+        // ast.addSourceFiles('**/*.ts');
         var _this = this;
-        var ast = new ts_simple_ast_1["default"]();
-        ast.addSourceFiles('**/*.ts');
         var globPath = this.sourceOption.path + "/**/*." + this.sourceOption.parseType + ".ts";
         var files = glob.sync(globPath, undefined);
         files.forEach(function (filePath, index) {
             if (!_this.shouldIgnore(filePath)) {
-                var sourceFile = ast.getSourceFile(filePath);
+                var sourceFile = undefined; // ast.getSourceFile(filePath);
                 _this.activeFile = _this.instantiateFileByType(filePath, sourceFile);
                 _this.menu.push(_this.activeFile.getMenuItem());
                 _this.appendMeta();
-                console.log(_this.meta);
             }
         });
         return new classes_1.FolderMeta(this.menu, this.meta);
@@ -58,7 +56,7 @@ var FolderScan = /** @class */ (function () {
             case models_1.parseType.model:
                 return new file_1.ModelFile(filePath, sourceFile);
             default:
-                process.exit(1);
+                // process.exit(1);
                 throw "parse type " + this.sourceOption.parseType + " was not recognized";
         }
     };

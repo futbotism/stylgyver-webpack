@@ -1,6 +1,6 @@
 {
   "name": "stylgyver-webpack",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A plugin for parsing angular projects and extracting meta info for displaying into a styleguide.",
   "main": "out/index.js",
   "scripts": {

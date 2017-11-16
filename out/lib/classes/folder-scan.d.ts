@@ -1,4 +1,4 @@
-import { BaseFile, MenuItem, FolderMeta } from '../classes';
+import { BaseFile, FolderMeta, MenuItem } from '../classes';
 import { SourceOption } from '../models';
 import { PipeFile } from './file';
 export declare class FolderScan {

@@ -1,15 +1,8 @@
-import { BaseFile, MenuItem, FolderMeta } from '../classes';
-import { SourceOption, parseType } from '../models';
-import * as fs from 'fs';
 import * as glob from 'glob';
-import {
-  ComponentFile,
-  DirectiveFile,
-  ServiceFile,
-  PipeFile,
-  ModelFile,
-} from './file';
-import tsSimpleAst from 'ts-simple-ast';
+
+import { BaseFile, FolderMeta, MenuItem } from '../classes';
+import { parseType, SourceOption } from '../models';
+import { ComponentFile, DirectiveFile, ModelFile, PipeFile, ServiceFile } from './file';
 
 export class FolderScan {
   sourceOption: SourceOption;
@@ -24,8 +17,8 @@ export class FolderScan {
 
   performScan() {
 
-    const ast = new tsSimpleAst();
-    ast.addSourceFiles('**/*.ts');
+    // const ast = new tsSimpleAst();
+    // ast.addSourceFiles('**/*.ts');
 
     const globPath = `${this.sourceOption.path}/**/*.${this.sourceOption.parseType}.ts`;
     const files = glob.sync(globPath, undefined);
@@ -33,12 +26,11 @@ export class FolderScan {
     files.forEach((filePath, index) => {
       if (!this.shouldIgnore(filePath)) {
 
-        const sourceFile = ast.getSourceFile(filePath);
+        const sourceFile = undefined;// ast.getSourceFile(filePath);
 
         this.activeFile = this.instantiateFileByType(filePath, sourceFile);
         this.menu.push(this.activeFile.getMenuItem());
         this.appendMeta();
-        console.log(this.meta);
       }
     });
 
@@ -85,7 +77,7 @@ export class FolderScan {
         return new ModelFile(filePath, sourceFile);
 
       default:
-        process.exit(1);
+        // process.exit(1);
         throw `parse type ${this.sourceOption.parseType} was not recognized`;
     }
 
