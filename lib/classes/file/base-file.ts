@@ -22,7 +22,7 @@ export class BaseFile {
 
   getDefaults() {
     const regex = /[\w-]+\./; // TODO: move to constant folder
-    const description: string = this.comments[0].lead;
+    const description: string = this.getDescription(this.comments);
     const title: string = regex.exec(this.filePath)[0].replace('.', '');
     const properties: Property[] = undefined;
     const id: string = camelCase(title);
@@ -33,6 +33,14 @@ export class BaseFile {
       properties,
       id,
     };
+  }
+  
+  getDescription(comments) {
+    if (typeof comments === 'undefined') {
+      return;
+    }
+    
+    return comments.reduce((description, comment) => `${description} ${comment.lead || comment.description}`, ''); 
   }
 
   getMenuItem(): MenuItem {

@@ -17,14 +17,16 @@ var ComponentFile = /** @class */ (function (_super) {
     __extends(ComponentFile, _super);
     function ComponentFile(path, sourceFile) {
         var _this = _super.call(this, path, sourceFile) || this;
+        _this.examples = [];
         _this.parseLines();
         return _this;
     }
     ComponentFile.prototype.parseLines = function () {
+        var _this = this;
         this.common.properties = this.lines
             .map(function (line) { return functions_1.getPropertyFromLine(line); })
             .filter(function (property) { return property && property.decorator; });
-        this.examples = this.comments.map(function (comment) { return comment.examples.map(function (example) { return example.code; }); });
+        this.comments.map(function (comment) { return comment.examples.map(function (example) { return _this.examples.push(example.code); }); });
     };
     ComponentFile.prototype.buildFileMeta = function () {
         return new component_meta_1.ComponentMeta(this.common, this.examples);

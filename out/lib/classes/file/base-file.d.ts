@@ -8,6 +8,7 @@ export declare class BaseFile {
     common: CommonMetaProperties;
     constructor(filePath: string, sourceFile: any);
     getDefaults(): void;
+    getDescription(comments: any): any;
     getMenuItem(): MenuItem;
     buildFileMeta(): void;
 }

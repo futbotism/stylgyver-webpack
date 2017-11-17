@@ -13,7 +13,7 @@ var BaseFile = /** @class */ (function () {
     }
     BaseFile.prototype.getDefaults = function () {
         var regex = /[\w-]+\./; // TODO: move to constant folder
-        var description = this.comments[0].lead;
+        var description = this.getDescription(this.comments);
         var title = regex.exec(this.filePath)[0].replace('.', '');
         var properties = undefined;
         var id = lodash_1.camelCase(title);
@@ -23,6 +23,12 @@ var BaseFile = /** @class */ (function () {
             properties: properties,
             id: id
         };
+    };
+    BaseFile.prototype.getDescription = function (comments) {
+        if (typeof comments === 'undefined') {
+            return;
+        }
+        return comments.reduce(function (description, comment) { return description + " " + (comment.lead || comment.description); }, '');
     };
     BaseFile.prototype.getMenuItem = function () {
         return new menu_item_1.MenuItem(this.common.title, this.common.id);
