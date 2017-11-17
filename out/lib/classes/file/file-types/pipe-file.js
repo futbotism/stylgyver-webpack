@@ -12,13 +12,17 @@ var __extends = (this && this.__extends) || (function () {
 exports.__esModule = true;
 var base_file_1 = require("../base-file");
 var pipe_meta_1 = require("../meta/pipe-meta");
+var functions_1 = require("../../../functions");
 var PipeFile = /** @class */ (function (_super) {
     __extends(PipeFile, _super);
     function PipeFile(path, sourceFile) {
-        return _super.call(this, path, sourceFile) || this;
+        var _this = _super.call(this, path, sourceFile) || this;
+        _this.examples = [];
+        _this.examples = functions_1.getCodeFromComments(_this.comments);
+        return _this;
     }
     PipeFile.prototype.buildFileMeta = function () {
-        return new pipe_meta_1.PipeMeta(this.common);
+        return new pipe_meta_1.PipeMeta(this.common, this.examples);
     };
     return PipeFile;
 }(base_file_1.BaseFile));

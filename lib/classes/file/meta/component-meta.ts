@@ -6,5 +6,6 @@ export class ComponentMeta extends BaseMeta {
   constructor(common, examples) {
     super(common);
     this.examples = examples;
+    this.health.missingExample = this.examples.length === 0;
   }
 }
