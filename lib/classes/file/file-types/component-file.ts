@@ -1,4 +1,4 @@
-import { getPropertyFromLine } from '../../../functions';
+import { getPropertyFromLine, getCodeFromComments } from '../../../functions';
 import { Property } from '../../../models/index';
 import { BaseFile } from '../base-file';
 import { ComponentMeta } from '../meta/component-meta';
@@ -16,7 +16,7 @@ export class ComponentFile extends BaseFile {
       .map(line => getPropertyFromLine(line))
       .filter((property: Property) => { return property && property.decorator; });
 
-    this.comments.map(comment => comment.examples.map(example => this.examples.push(example.code)));
+    this.examples = getCodeFromComments(this.comments);
   }
 
   buildFileMeta() {

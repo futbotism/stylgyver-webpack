@@ -1,14 +1,14 @@
 import { camelCase } from 'lodash';
 import * as comments from 'parse-comments';
 
-import { Property } from '../../models/';
+import { Property, Comment } from '../../models/';
 import { MenuItem } from '../menu-item';
 import { CommonMetaProperties } from './common-meta';
 
 export class BaseFile {
   private filePath: string;
   private sourceFile: any;
-  public comments: any[];
+  public comments: Comment[];
   public lines: string[];
   public common: CommonMetaProperties;
 

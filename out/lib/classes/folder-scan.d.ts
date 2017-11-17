@@ -1,6 +1,6 @@
 import { BaseFile, FolderMeta, MenuItem } from '../classes';
 import { SourceOption } from '../models';
-import { ServiceFile } from './file';
+import { PipeFile } from './file';
 export declare class FolderScan {
     sourceOption: SourceOption;
     activeFile: BaseFile;
@@ -10,5 +10,5 @@ export declare class FolderScan {
     performScan(): FolderMeta;
     appendMeta(): void;
     shouldIgnore(filePath: string): any;
-    instantiateFileByType(filePath: any, sourceFile: any): ServiceFile;
+    instantiateFileByType(filePath: any, sourceFile: any): PipeFile;
 }

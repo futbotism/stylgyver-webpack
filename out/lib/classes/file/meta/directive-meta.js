@@ -13,8 +13,10 @@ exports.__esModule = true;
 var base_meta_1 = require("../base-meta");
 var DirectiveMeta = /** @class */ (function (_super) {
     __extends(DirectiveMeta, _super);
-    function DirectiveMeta(common) {
-        return _super.call(this, common) || this;
+    function DirectiveMeta(common, examples) {
+        var _this = _super.call(this, common) || this;
+        _this.examples = examples;
+        return _this;
     }
     return DirectiveMeta;
 }(base_meta_1.BaseMeta));

@@ -22,11 +22,10 @@ var ComponentFile = /** @class */ (function (_super) {
         return _this;
     }
     ComponentFile.prototype.parseLines = function () {
-        var _this = this;
         this.common.properties = this.lines
             .map(function (line) { return functions_1.getPropertyFromLine(line); })
             .filter(function (property) { return property && property.decorator; });
-        this.comments.map(function (comment) { return comment.examples.map(function (example) { return _this.examples.push(example.code); }); });
+        this.examples = functions_1.getCodeFromComments(this.comments);
     };
     ComponentFile.prototype.buildFileMeta = function () {
         return new component_meta_1.ComponentMeta(this.common, this.examples);
