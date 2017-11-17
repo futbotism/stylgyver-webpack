@@ -1,2 +1,2 @@
-export * from './typed-variable';
+export * from './property';
 export * from './options';
