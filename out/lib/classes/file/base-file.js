@@ -17,11 +17,15 @@ var BaseFile = /** @class */ (function () {
         var title = regex.exec(this.filePath)[0].replace('.', '');
         var properties = undefined;
         var id = lodash_1.camelCase(title);
+        var health = {
+            missingDescription: description.length === 0
+        };
         this.common = {
             description: description,
             title: title,
             properties: properties,
-            id: id
+            id: id,
+            health: health
         };
     };
     BaseFile.prototype.getDescription = function (comments) {
