@@ -1,7 +1,7 @@
 import { camelCase } from 'lodash';
 import * as comments from 'parse-comments';
 
-import { Property, Comment } from '../../models/';
+import { Property, Comment, Health } from '../../models/';
 import { MenuItem } from '../menu-item';
 import { CommonMetaProperties } from './common-meta';
 
@@ -26,12 +26,16 @@ export class BaseFile {
     const title: string = regex.exec(this.filePath)[0].replace('.', '');
     const properties: Property[] = undefined;
     const id: string = camelCase(title);
+    const health: Health = {
+      missingDescription: description.length === 0,
+    };
     
     this.common = {
       description,
       title,
       properties,
       id,
+      health,
     };
   }
   

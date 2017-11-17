@@ -6,6 +6,7 @@ var BaseMeta = /** @class */ (function () {
         this.title = common.title;
         this.properties = common.properties;
         this.description = common.description;
+        this.health = common.health;
     }
     return BaseMeta;
 }());
