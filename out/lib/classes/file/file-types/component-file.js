@@ -24,6 +24,7 @@ var ComponentFile = /** @class */ (function (_super) {
     ComponentFile.prototype.parseLines = function () {
         this.common.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e && e.decorator; });
         this.examples = functions_1.getExamplesFromComments(this.comments);
+        this.common.health.missingExample = this.examples.length === 0;
     };
     ComponentFile.prototype.buildFileMeta = function () {
         return new component_meta_1.ComponentMeta(this.common, this.examples);

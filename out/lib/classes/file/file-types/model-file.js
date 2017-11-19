@@ -22,6 +22,7 @@ var ModelFile = /** @class */ (function (_super) {
     }
     ModelFile.prototype.parseLines = function () {
         this.common.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e; });
+        this.common.health.missingProperties = this.common.properties.length === 0;
     };
     ModelFile.prototype.buildFileMeta = function () {
         return new model_meta_1.ModelMeta(this.common);

@@ -14,9 +14,7 @@ var base_meta_1 = require("../base-meta");
 var ModelMeta = /** @class */ (function (_super) {
     __extends(ModelMeta, _super);
     function ModelMeta(common) {
-        var _this = _super.call(this, common) || this;
-        _this.health.missingProperties = _this.properties.length === 0;
-        return _this;
+        return _super.call(this, common) || this;
     }
     return ModelMeta;
 }(base_meta_1.BaseMeta));

@@ -16,7 +16,6 @@ var PipeMeta = /** @class */ (function (_super) {
     function PipeMeta(common, examples) {
         var _this = _super.call(this, common) || this;
         _this.examples = examples;
-        _this.health.missingExample = _this.examples.length === 0;
         return _this;
     }
     return PipeMeta;

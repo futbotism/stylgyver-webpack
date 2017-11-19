@@ -24,6 +24,7 @@ var DirectiveFile = /** @class */ (function (_super) {
     DirectiveFile.prototype.parseLines = function () {
         this.common.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e; });
         this.examples = functions_1.getExamplesFromComments(this.comments);
+        this.common.health.missingExample = this.examples.length === 0;
     };
     DirectiveFile.prototype.buildFileMeta = function () {
         return new directive_meta_1.DirectiveMeta(this.common, this.examples);

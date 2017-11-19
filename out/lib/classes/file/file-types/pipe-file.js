@@ -19,6 +19,7 @@ var PipeFile = /** @class */ (function (_super) {
         var _this = _super.call(this, path, sourceFile) || this;
         _this.examples = [];
         _this.examples = functions_1.getExamplesFromComments(_this.comments);
+        _this.common.health.missingExample = _this.examples.length === 0;
         return _this;
     }
     PipeFile.prototype.buildFileMeta = function () {
