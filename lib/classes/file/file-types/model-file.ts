@@ -12,6 +12,7 @@ export class ModelFile extends BaseFile {
 
   parseLines() {
     this.common.properties = this.lines.map(line => getPropertyFromLine(line)).filter(e => e);
+    this.common.health.missingProperties = this.common.properties.length === 0;
   }
 
   buildFileMeta() {

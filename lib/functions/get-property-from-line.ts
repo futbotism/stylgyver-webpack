@@ -1,4 +1,5 @@
 import { Property } from '../models';
+import { getDecoratorFromLine } from './index';
 
 export function getPropertyFromLine(line: string): Property {
   const regex = /(\w*?)\s?\:\s?(\w*[\[\]]*)/;
@@ -9,15 +10,10 @@ export function getPropertyFromLine(line: string): Property {
     return new Property('OUTPUT_NAME', 'OUTPUT_TYPE', 'Output');
   }
 
-  if (lineMatch) {
-    const decorator = findDecorator(line);
-    return new Property(lineMatch[1], lineMatch[2], decorator);
-  }
-}
 
-export function findDecorator(line: string) {
-  if (line.includes('@Input')) return 'Input';
-  if (line.includes('@HostBinding')) return 'HostBinding';
-  if (line.includes('@ContentChild')) return 'ContentChild';
-  if (line.includes('@ContentChildren')) return 'ContentChildren';
+  if (lineMatch) {
+    const decorator = getDecoratorFromLine(line);
+    const a = new Property(lineMatch[1], lineMatch[2], decorator);
+    return a;
+  }
 }

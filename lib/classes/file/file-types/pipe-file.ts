@@ -1,13 +1,14 @@
 import { BaseFile } from '../base-file';
 import { PipeMeta } from '../meta/pipe-meta';
-import { getCodeFromComments } from '../../../functions';
+import { getExamplesFromComments } from '../../../functions';
 
 export class PipeFile extends BaseFile {
   examples: string[] = [];
 
   constructor(path: string, sourceFile: any) {
     super(path, sourceFile);
-    this.examples = getCodeFromComments(this.comments);
+    this.examples = getExamplesFromComments(this.comments);
+    this.common.health.missingExample = this.examples.length === 0;
   }
 
   buildFileMeta() {

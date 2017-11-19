@@ -22,10 +22,8 @@ var DirectiveFile = /** @class */ (function (_super) {
         return _this;
     }
     DirectiveFile.prototype.parseLines = function () {
-        this.common.properties = this.lines
-            .map(function (line) { return functions_1.getPropertyFromLine(line); })
-            .filter(function (property) { return property && property.decorator; });
-        this.examples = functions_1.getCodeFromComments(this.comments);
+        this.common.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e; });
+        this.examples = functions_1.getExamplesFromComments(this.comments);
     };
     DirectiveFile.prototype.buildFileMeta = function () {
         return new directive_meta_1.DirectiveMeta(this.common, this.examples);
