@@ -1,4 +1,4 @@
-import { getPropertyFromLine, getCodeFromComments } from '../../../functions';
+import { getPropertyFromLine, getExamplesFromComments } from '../../../functions';
 import { Property } from '../../../models/index';
 import { BaseFile } from '../base-file';
 import { ComponentMeta } from '../meta/component-meta';
@@ -12,11 +12,9 @@ export class ComponentFile extends BaseFile {
   }
 
   parseLines() {
-    this.common.properties = this.lines
-      .map(line => getPropertyFromLine(line))
-      .filter((property: Property) => { return property && property.decorator; });
-
-    this.examples = getCodeFromComments(this.comments);
+    this.common.properties = this.lines.map(line => getPropertyFromLine(line)).filter(e => e && e.decorator);
+    this.examples = getExamplesFromComments(this.comments);
+    this.common.health.missingExample = this.examples.length === 0;
   }
 
   buildFileMeta() {

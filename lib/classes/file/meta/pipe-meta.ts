@@ -6,6 +6,5 @@ export class PipeMeta extends BaseMeta {
   constructor(common, examples) {
     super(common);
     this.examples = examples;
-    this.health.missingExample = this.examples.length === 0;
   }
 }

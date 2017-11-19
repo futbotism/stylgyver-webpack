@@ -4,4 +4,5 @@ function __export(m) {
 }
 exports.__esModule = true;
 __export(require("./get-property-from-line"));
-__export(require("./get-code-from-comments"));
+__export(require("./get-examples-from-comments"));
+__export(require("./get-decorator-from-line"));

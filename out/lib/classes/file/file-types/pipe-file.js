@@ -18,7 +18,7 @@ var PipeFile = /** @class */ (function (_super) {
     function PipeFile(path, sourceFile) {
         var _this = _super.call(this, path, sourceFile) || this;
         _this.examples = [];
-        _this.examples = functions_1.getCodeFromComments(_this.comments);
+        _this.examples = functions_1.getExamplesFromComments(_this.comments);
         return _this;
     }
     PipeFile.prototype.buildFileMeta = function () {

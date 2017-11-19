@@ -1,6 +1,6 @@
 import { Comment } from '../models/';
 
-export function getCodeFromComments(comments: Comment[]): string[] {
+export function getExamplesFromComments(comments: Comment[]): string[] {
 
   const examples: string[] = [];
   comments.forEach((comment) => {

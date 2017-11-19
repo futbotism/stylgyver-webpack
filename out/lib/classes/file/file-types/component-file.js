@@ -22,10 +22,8 @@ var ComponentFile = /** @class */ (function (_super) {
         return _this;
     }
     ComponentFile.prototype.parseLines = function () {
-        this.common.properties = this.lines
-            .map(function (line) { return functions_1.getPropertyFromLine(line); })
-            .filter(function (property) { return property && property.decorator; });
-        this.examples = functions_1.getCodeFromComments(this.comments);
+        this.common.properties = this.lines.map(function (line) { return functions_1.getPropertyFromLine(line); }).filter(function (e) { return e && e.decorator; });
+        this.examples = functions_1.getExamplesFromComments(this.comments);
     };
     ComponentFile.prototype.buildFileMeta = function () {
         return new component_meta_1.ComponentMeta(this.common, this.examples);
