@@ -1,9 +1,10 @@
 "use strict";
+var models_1 = require("./lib/models");
 var classes_1 = require("./lib/classes");
 var StyleGyverPlugin = /** @class */ (function () {
     function StyleGyverPlugin(options) {
         this.styleguide = {};
-        this.options = options; // Todo add a check to ensure all correct options are defined and set
+        this.options = new models_1.DefaultOptions(options); // Todo add a check to ensure all correct options are defined and set
     }
     StyleGyverPlugin.prototype.apply = function (compiler) {
         var _this = this;

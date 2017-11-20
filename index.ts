@@ -1,13 +1,13 @@
-import { Options, SourceOption } from './lib/models';
+import { SourceOption, DefaultOptions } from './lib/models';
 import { FolderScan } from './lib/classes';
 
 class StyleGyverPlugin {
 
-  options: Options;
+  options: DefaultOptions;
   styleguide = {};
 
-  constructor(options: Options) {
-    this.options = options; // Todo add a check to ensure all correct options are defined and set
+  constructor(options: DefaultOptions) {
+    this.options = new DefaultOptions(options); // Todo add a check to ensure all correct options are defined and set
   }
 
   apply(compiler) {

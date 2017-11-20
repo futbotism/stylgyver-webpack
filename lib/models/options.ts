@@ -1,4 +1,4 @@
-export interface Options {
+export interface defaultOptions {
   outputPath: string;
   sourceOptions: SourceOption[];
 }
@@ -22,3 +22,18 @@ export const parseType = {
   model: 'model' as parseType,
 };
 
+export class DefaultOptions implements defaultOptions {
+  outputPath: string;
+  sourceOptions: SourceOption[];
+
+  constructor(options: defaultOptions) {
+    console.log(options);
+    if (typeof options.outputPath === 'undefined') {
+      throw 'options.outputPath is not defined';
+    }
+
+    this.outputPath = options.outputPath;
+    this.sourceOptions = options.sourceOptions;
+
+  }
+}

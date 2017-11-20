@@ -1,4 +1,4 @@
-export interface Options {
+export interface defaultOptions {
     outputPath: string;
     sourceOptions: SourceOption[];
 }
@@ -18,3 +18,8 @@ export declare const parseType: {
     pipe: parseType;
     model: parseType;
 };
+export declare class DefaultOptions implements defaultOptions {
+    outputPath: string;
+    sourceOptions: SourceOption[];
+    constructor(options: defaultOptions);
+}

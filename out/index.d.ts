@@ -1,8 +1,8 @@
-import { Options } from './lib/models';
+import { DefaultOptions } from './lib/models';
 declare class StyleGyverPlugin {
-    options: Options;
+    options: DefaultOptions;
     styleguide: {};
-    constructor(options: Options);
+    constructor(options: DefaultOptions);
     apply(compiler: any): void;
     buildStyleguide(): void;
 }
