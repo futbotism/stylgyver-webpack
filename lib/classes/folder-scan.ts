@@ -49,13 +49,9 @@ export class FolderScan {
   shouldIgnore(filePath: string) {
     const isModule = filePath.includes('module.ts');
     const isIndex = filePath.includes('index.ts');
+    const shouldIgnore = this.sourceOption.folderToIgnore && this.sourceOption.folderToIgnore.some(f => filePath.includes(f));
 
-    let isIgnore;
-    if (this.sourceOption.folderToIgnore) {
-      isIgnore = this.sourceOption.folderToIgnore.find(filePathToIgnore => filePathToIgnore === filePath);
-    }
-
-    return isModule || isIndex || isIgnore;
+    return isModule || isIndex || shouldIgnore;
   }
 
   instantiateFileByType(filePath, sourceFile) {

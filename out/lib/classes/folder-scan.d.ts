@@ -9,6 +9,6 @@ export declare class FolderScan {
     constructor(sourceOption: SourceOption);
     performScan(): FolderMeta;
     appendMeta(): void;
-    shouldIgnore(filePath: string): any;
+    shouldIgnore(filePath: string): boolean;
     instantiateFileByType(filePath: any, sourceFile: any): ServiceFile;
 }

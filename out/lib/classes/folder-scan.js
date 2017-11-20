@@ -37,11 +37,8 @@ var FolderScan = /** @class */ (function () {
     FolderScan.prototype.shouldIgnore = function (filePath) {
         var isModule = filePath.includes('module.ts');
         var isIndex = filePath.includes('index.ts');
-        var isIgnore;
-        if (this.sourceOption.folderToIgnore) {
-            isIgnore = this.sourceOption.folderToIgnore.find(function (filePathToIgnore) { return filePathToIgnore === filePath; });
-        }
-        return isModule || isIndex || isIgnore;
+        var shouldIgnore = this.sourceOption.folderToIgnore && this.sourceOption.folderToIgnore.some(function (f) { return filePath.includes(f); });
+        return isModule || isIndex || shouldIgnore;
     };
     FolderScan.prototype.instantiateFileByType = function (filePath, sourceFile) {
         switch (this.sourceOption.parseType) {
