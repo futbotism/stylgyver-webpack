@@ -27,7 +27,6 @@ export class DefaultOptions implements defaultOptions {
   sourceOptions: SourceOption[];
 
   constructor(options: defaultOptions) {
-    console.log(options);
     if (typeof options.outputPath === 'undefined') {
       throw 'options.outputPath is not defined';
     }
