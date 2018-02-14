@@ -11,7 +11,7 @@ Stylgyver is a plugin for webpack that generates documentation from your shared 
 
 `const StylgyverPlugin = require('../stylgyver-webpack');`
 
-## Import
+## Configure
 
 ```javascript
 new StylgyverPlugin({
