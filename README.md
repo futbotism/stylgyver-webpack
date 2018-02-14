@@ -1,31 +1,41 @@
-# Typescript module template
+# Stylgyver!
 
-A typescript boilerplate to publish modules to npm
+Stylgyver is a plugin for webpack that generates documentation from your shared angular folder
+[example and docs here!](https://futbotism.github.io/stylgyver-ng/)
 
-## Usage
+## Install
 
-Clone this repo, and start adding your code in the `index.ts` file.  
-When you are done, write the tests in the `index.test.ts` file. For testing, this repo works with [Jest](https://facebook.github.io/jest/).
+`npm install stylgyver-webpack --save-dev`
 
-Once you finished, you can publish your module to npm with `npm publish`. This will compile your Typescript code
-and send it to npm.
+## Import
 
-Make sure to change the name of the package in `package.json`
+`const StylgyverPlugin = require('../stylgyver-webpack');`
 
-## Features
-* Testing with Jest
-* Linting out of the box (checks the style of your code), with TSLint
-* Build, prepublish and other scripts to help you to develop
-* Works with Typescript: Static typing for your JS Applications, reducing amount of runtime errors
-* Coverage out of the box, thanks to Jest
-* Uses deterministic module resolving, with Yarn
+## Import
 
-## Credits
-
-Developed by Juan Camilo Guarín Peñaranda,  
-Otherwise SAS, Colombia  
-2017
-
-## License 
-
-MIT.
+```javascript
+new StylgyverPlugin({
+    outputPath: './src/app/styleguide/meta.json',
+    sourceOptions: [{
+        parseType: 'component',
+        name: 'components',
+        path: 'src/app/shared/components'
+      },{
+        name: 'models',
+        parseType: 'model',
+        path: 'src/app/shared/models',
+        addMetaToArray: 'true'
+      },{
+        name: 'pipes',
+        parseType: 'pipe',
+        path: 'src/app/shared/pipes',
+        addMetaToArray: 'true'
+      },{
+        name: 'directives',
+        parseType: 'directive',
+        path: 'src/app/shared/directives',
+        addMetaToArray: 'true'
+      }
+    ]
+  })
+  ```
