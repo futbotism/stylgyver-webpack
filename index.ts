@@ -1,8 +1,7 @@
 import { SourceOption, DefaultOptions } from './lib/models';
 import { FolderScan } from './lib/classes';
-import { isEqual } from 'lodash';
-
-let prevStyleguide: any = undefined;
+import { isEqual, differenceWith } from 'lodash';
+import * as fs from 'fs';
 
 class StyleGyverPlugin {
   options: DefaultOptions;
@@ -25,16 +24,18 @@ class StyleGyverPlugin {
       this.styleguide[sourceOption.name] = folderScan.performScan();
     });
 
-    if (!isEqual(this.styleguide, prevStyleguide)) {
-      require('fs').writeFile(
-        this.options.outputPath,
-        JSON.stringify(this.styleguide, null, 2),
-        'utf-8',
+    let t;
+    try {
+      t = JSON.parse(fs.readFileSync(this.options.outputPath, 'utf8'));
+    } catch {
+      t = {};
+    }
+
+    if (JSON.stringify(this.styleguide) !== JSON.stringify(t)) {
+      fs.writeFile(this.options.outputPath, JSON.stringify(this.styleguide, null, 2), 'utf-8', () => {
         // tslint:disable-next-line:no-console
-        () => {
-          prevStyleguide = Object.assign({}, this.styleguide);
-          console.info('The styleguide has been generated 🎨');
-        });
+        console.info('The styleguide has been generated 🎨');
+      });
     }
   }
 }
